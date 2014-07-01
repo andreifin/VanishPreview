@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <h1> Divide and Vanish!</h1> 
+    <p>
+        Can you bring all the numbers to 1? Drag two numbers together to divide them by their lowest common divisor. Continue your path from where you left off and try to make all the numbers equal to 1.
+    </p>
+    <div>
+      <div ng-repeat="number in numbers track by $index">
+        <div class="numberBox" droppable drop="handleDrop" draggable
+             ng-attr-x="{{positions[numbers.length][$index][0]}}"
+             ng-attr-y="{{positions[numbers.length][$index][1]}}"
+             ng-click="clickEvent($index)"
+             id={{$index}}>{{number+' '}} </div>
+      </div>
+    </div>
+
+    <!--<div class="btn-group">
+      <button ng-repeat="number in numbers track by $index" class="btn" ng-click="clickEvent($index)">{{number}}</button>
+      <button class="btn btn-primary" ng-click="reset()">Reset</button>
+    </div>-->
+    <br><br><br>
+    <button class="btn-primary" id="centered" ng-click="reset()"> Reset </button>
+
+    <h3 ng-show = "loseFlag"> Sorry, it seems you have reached a dead end. Try again? </h3>
+    <h2 ng-show = "winFlag"> Congratulations! You won!</h2>
+
+    <h2><a href='/#/levels'> Back </a></h2>
+  </body>
+</html>
+
