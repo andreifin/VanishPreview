@@ -7,7 +7,6 @@ angular.module('previewGruntApp')
   unique = require('prelude-ls').unique;
   
   $scope.levels = [
-      [],
       [2,2],
       [2,6,3],
       [2,3,4,6],
@@ -32,7 +31,8 @@ angular.module('previewGruntApp')
     ];
 
   var comDiv, endCheck;
-  $scope.startingNums = $scope.levels[$routeParams.levelId];
+  $scope.currentLevel = $routeParams.levelId - 1;
+  $scope.startingNums = $scope.levels[$scope.currentLevel];
   $scope.started = false;
   $scope.numbers = $scope.startingNums.concat([]);
   $scope.winFlag = false;
@@ -85,30 +85,7 @@ angular.module('previewGruntApp')
     $scope.loseFlag = false;
     $scope.started = false;
     return $scope.numbers = $scope.startingNums.concat([]);
-  };
-  //This is only needed for the buttons
-
-  $scope.clickEvent = function(index){
-    var curr, div;
-    if (!$scope.started) {
-      $scope.prev = index;
-      $scope.started = true;
-    } else {
-      curr = index;
-      if (curr !== $scope.prev) {
-        div = comDiv($scope.numbers[$scope.prev], $scope.numbers[curr]);
-        $scope.numbers[$scope.prev] /= div;
-        $scope.numbers[curr] /= div;
-        if (div !== 1) {
-          $scope.prev = curr;
-        }
-      }
-    }
-    if ($scope.numbers[$scope.prev] === 1) {
-      return endCheck();
-    }
-  };
-  
+  }; 
 })
 
 

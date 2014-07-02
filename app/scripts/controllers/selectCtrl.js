@@ -3,7 +3,6 @@
 angular.module('previewGruntApp')
   .controller('SelectCtrl', function($scope) {
     $scope.levels = [
-      [],
       [2,2],
       [2,6,3],
       [2,3,4,6],
