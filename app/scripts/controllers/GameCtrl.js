@@ -12,7 +12,7 @@ angular.module('previewGruntApp')
       [2,3,4,6],
       [6,10,15],
       [2,12,10,30,2],
-      [3,6,4,12,14,42,2],
+      [3,6,4,12,14,21],
       [6,6,6,6,9],
       [4,4,6,6,9],
       [14,22,30,105,198],
@@ -30,7 +30,7 @@ angular.module('previewGruntApp')
       [44,63,180,385]
     ];
 
-  var comDiv, endCheck;
+  var comDiv, endCheck, hasDiv;
   $scope.currentLevel = $routeParams.levelId - 1;
   $scope.startingNums = $scope.levels[$scope.currentLevel];
   $scope.started = false;
@@ -38,6 +38,7 @@ angular.module('previewGruntApp')
   $scope.winFlag = false;
   $scope.loseFlag = false;
   $scope.prev = -1;
+  $scope.hasContinue = false;
   $scope.positions = [[[]], [[]], [[10, 10], [100, 100]], [[10, 10], [10, 100], [50, 50]], [[10, 10], [10, 100], [100, 10], [100, 100]]];
   comDiv = function(a, b){
     var best, i$, i;
@@ -57,6 +58,7 @@ angular.module('previewGruntApp')
       return best;
     }
   };
+
   endCheck = function(){
     if (unique($scope.numbers).length === 1 && $scope.numbers[0] === 1) {
       return $scope.winFlag = true;
@@ -64,6 +66,12 @@ angular.module('previewGruntApp')
       return $scope.loseFlag = true;
     }
   };
+
+  hasDiv = function(element,index,array) {
+    $scope.hasContinue = $scope.hasContinue || (comDiv($scope.numbers[$scope.prev],element) > 1);
+    return;
+  }
+
   $scope.handleDrop = function(item, bin){
     var div;
     if(item===bin) {return;}
@@ -78,7 +86,13 @@ angular.module('previewGruntApp')
     if ($scope.numbers[$scope.prev] === 1) {
       return endCheck();
     }
+    $scope.hasContinue = false;
+    var temp = $scope.numbers.concat([]);
+    temp.splice($scope.prev,1);
+    temp.forEach(hasDiv);
+    if($scope.hasContinue === false) $scope.loseFlag = true;
   };
+
   return $scope.reset = function(){
     $scope.prev = -1;
     $scope.winFlag = false;

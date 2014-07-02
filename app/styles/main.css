@@ -19,9 +19,11 @@ p {
 #lvlButton {
   height: 30px;
   width: 30px;
+  border-radius: 5px;
   position: relative;
   float: left;
   margin-left: 10px;
+  margin-top: 10px;
 }
 #buttonGroup {
   width: 70%;
@@ -38,10 +40,17 @@ p {
   width: 40px;
   height: 40px;
   border: 15px;
+  border-radius: 5px;
   background: teal;
   position: relative;
   float: left;
   margin-left: 2em;
   font-size: x-large;
   text-align: center;
+}
+.active {
+  background: yellow;
+}
+.over {
+  background: green;
 }
