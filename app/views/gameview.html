@@ -11,16 +11,39 @@
     <div>
       <div id="buttonGroup" ng-repeat="number in numbers track by $index">
         <div class="numberBox" droppable drop="handleDrop" draggable
-             ng-attr-x="{{positions[numbers.length][$index][0]}}"
-             ng-attr-y="{{positions[numbers.length][$index][1]}}"
-             ng-click="clickEvent($index)"
              id={{$index}}
              ng-hide = "number === 1"
              ng-class = "{'active':prev==$index}">{{number+' '}} </div>
       </div>
     </div>
-    <br><br><br>
-    <button class="btn-primary" id="centered" ng-click="reset()"> Reset </button>
+    <br><br>
+    <!--History module: disable for guaranteed functionality-->
+    <div>
+      <div ng-repeat="(age,state) in hist">
+        <div id="buttonGroup" ng-repeat="nr in state track by $index">
+          <div class="numberBox" ng-hide = "nr === 1"
+               ng-class="{'active':$index==histPrev[age]}">
+            {{nr+' '}}
+          </div>
+        </div>
+        <br
+      </div>
+    </div>
+   
+
+    <!--End of History module -->
+
+    <br>
+  
+    <div id="centered">
+      <button class="btn btn-default" ng-click="undo()"> Undo </button>
+      <button class="btn btn-default" ng-click="reset()"> Reset </button>
+      <a class="btn btn-default" role="button" href='/#/levels'> Back </a>
+    </div>
+
+
+
+<!--    <button class="btn-primary" id="centered" ng-click="reset()"> Reset </button> -->
 
     <h3 ng-show = "loseFlag"> Sorry, it seems you have reached a dead end. Try again? </h3>
     <h2 ng-show = "winFlag"> Congratulations! You won!</h2>
@@ -28,7 +51,7 @@
       <a href="{{'/#/levels/' + (currentLevel+2)}}"> Next level </a>
     </h2>
 
-    <h2><a href='/#/levels'> Back </a></h2>
+    <!--<h2><a href='/#/levels'> Back </a></h2> -->
   </body>
 </html>
 

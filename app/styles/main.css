@@ -31,9 +31,8 @@ p {
   margin-right:auto;
 }
 #centered {
-  width: auto;
-  margin-left: 50%;
-  margin-right: 50%;
+  width: 100%;
+  margin-left: 43%;
 }
 
 .numberBox {
@@ -42,9 +41,10 @@ p {
   border: 15px;
   border-radius: 5px;
   background: teal;
-  position: relative;
+  /*position: relative;*/
   float: left;
-  margin-left: 2em;
+  margin-left: 40px;
+  margin-top: 10px;
   font-size: x-large;
   text-align: center;
 }
@@ -53,4 +53,7 @@ p {
 }
 .over {
   background: green;
+}
+br {
+  clear: both;
 }

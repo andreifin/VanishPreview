@@ -31,15 +31,27 @@ angular.module('previewGruntApp')
     ];
 
   var comDiv, endCheck, hasDiv;
-  $scope.currentLevel = $routeParams.levelId - 1;
-  $scope.startingNums = $scope.levels[$scope.currentLevel];
-  $scope.started = false;
-  $scope.numbers = $scope.startingNums.concat([]);
+  $scope.currentLevel = $routeParams.levelId - 1; //array offset
+  $scope.startingNums = $scope.levels[$scope.currentLevel]; //stored for reset
+  $scope.numbers = $scope.startingNums.concat([]); //current working array
   $scope.winFlag = false;
   $scope.loseFlag = false;
-  $scope.prev = -1;
+  $scope.prev = -1; //the tile you need to start moving from; initialised to -1 because there is no initial restriction
   $scope.hasContinue = false;
-  $scope.positions = [[[]], [[]], [[10, 10], [100, 100]], [[10, 10], [10, 100], [50, 50]], [[10, 10], [10, 100], [100, 10], [100, 100]]];
+  //$scope.positions = [[[]], [[]], [[10, 10], [100, 100]], [[10, 10], [10, 100], [50, 50]], [[10, 10], [10, 100], [100, 10], [100, 100]]];
+  $scope.hist = [];
+  $scope.histPrev = [];
+
+  var equals = function(a,b){
+    var l = a.length;
+    if(l!==b.length) return false;
+    while(l>=0) {
+      if(a[l] !== b[l]) return false;
+      l--;
+    }
+    return true;
+  }
+
   comDiv = function(a, b){
     var best, i$, i;
     if (a > b) {
@@ -77,11 +89,17 @@ angular.module('previewGruntApp')
     if(item===bin) {return;}
     if (item === $scope.prev || $scope.prev === -1) {
       div = comDiv($scope.numbers[item], $scope.numbers[bin]);
+      if (div === 1) {
+        return; //Maybe set a flag to announce failed division
+      }
+      //state will change, so save in history before that
+      $scope.hist.unshift($scope.numbers.concat([]));
+      $scope.histPrev.unshift($scope.prev+'');
+
+      //update state
       $scope.numbers[item] /= div;
       $scope.numbers[bin] /= div;
-      if (div !== 1) {
-        $scope.prev = bin;
-      }
+      $scope.prev = bin;
     }
     if ($scope.numbers[$scope.prev] === 1) {
       return endCheck();
@@ -93,11 +111,25 @@ angular.module('previewGruntApp')
     if($scope.hasContinue === false) $scope.loseFlag = true;
   };
 
+  $scope.undo = function(){
+    if($scope.hist.length === 0) return;
+    $scope.prev = $scope.histPrev[0]+'';
+    $scope.histPrev.splice(0,1);
+    $scope.numbers = $scope.hist[0].concat([]);
+    $scope.hist.splice(0,1);
+    $scope.winFlag = false;
+    $scope.loseFlag = false;
+    if(equals($scope.numbers,$scope.startingNums)) {
+      $scope.reset();
+    }
+  }
+
   return $scope.reset = function(){
     $scope.prev = -1;
     $scope.winFlag = false;
     $scope.loseFlag = false;
-    $scope.started = false;
+    $scope.hist = [];
+    $scope.histPrev = [];
     return $scope.numbers = $scope.startingNums.concat([]);
   }; 
 })
