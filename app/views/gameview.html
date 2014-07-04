@@ -10,7 +10,8 @@
     <br>
     <div>
       <div id="buttonGroup" ng-repeat="number in numbers track by $index">
-        <div class="numberBox" droppable drop="handleDrop" draggable
+        <div class="numberBox animate" 
+             droppable drop="handleDrop" draggable
              id={{$index}}
              ng-hide = "number === 1"
              ng-class = "{'active':prev==$index}">{{number+' '}} </div>

@@ -100,6 +100,17 @@ angular.module('previewGruntApp')
       $scope.numbers[item] /= div;
       $scope.numbers[bin] /= div;
       $scope.prev = bin;
+
+      //testing setTimeout
+
+      /*setTimeout(function() {
+        alert("This is run!");
+        /*$scope.numbers[item] /= div;
+        $scope.numbers[bin] /= div;
+        $scope.prev = bin;
+      }, 1000);*/
+
+
     }
     if ($scope.numbers[$scope.prev] === 1) {
       return endCheck();
