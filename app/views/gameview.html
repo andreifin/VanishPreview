@@ -9,8 +9,9 @@
     <h2> Level {{currentLevel+1}} </h2>
     <br>
     <div>
-      <div id="buttonGroup" ng-repeat="number in numbers track by $index">
-        <div class="numberBox animate" 
+      <div id="buttonGroup" class="animate"
+           ng-repeat="number in numbers track by $index">
+        <div class="numberBox hideAnim" 
              droppable drop="handleDrop" draggable
              id={{$index}}
              ng-hide = "number === 1"
@@ -18,16 +19,18 @@
       </div>
     </div>
     <br><br>
-    <!--History module: disable for guaranteed functionality-->
+    <!--History module-->
     <div>
-      <div ng-repeat="(age,state) in hist">
-        <div id="buttonGroup" ng-repeat="nr in state track by $index">
-          <div class="numberBox" ng-hide = "nr === 1"
-               ng-class="{'active':$index==histPrev[age]}">
+      <div class="animate" ng-repeat="(age,state) in hist">
+        <div id="buttonGroup" class="animate"
+             ng-repeat="nr in state track by $index">
+          <div class="numberBox hideAnim" ng-hide = "nr === 1"
+               ng-class="{'active':$index==histPrev[age]}"
+               style="display:block!important">
             {{nr+' '}}
           </div>
         </div>
-        <br
+        <br>
       </div>
     </div>
    

@@ -99,6 +99,13 @@ angular.module('previewGruntApp')
       //update state
       $scope.numbers[item] /= div;
       $scope.numbers[bin] /= div;
+      
+
+      /*if($scope.numbers[item] === 1) {
+        $scope.numbers.splice(item,1);
+        if(bin>item) bin--;
+      }*/
+
       $scope.prev = bin;
 
       //testing setTimeout

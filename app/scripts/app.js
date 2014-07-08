@@ -19,19 +19,19 @@ angular
   .config(function ($routeProvider) {
     $routeProvider.
        when('/', {
-         templateUrl: 'views/main.html', //add the correct path
+         templateUrl: 'views/main.html',
          controller: 'MainCtrl'
        }).
        when('/links', {
-         templateUrl: 'views/links.html', //add the correct path
+         templateUrl: 'views/links.html',
          controller: 'LinksCtrl' //is it needed?
        }).
        when('/levels', {
-         templateUrl: 'views/levelSelect.html', //add the correct path
+         templateUrl: 'views/levelSelect.html',
          controller: 'SelectCtrl'
        }).
        when('/levels/:levelId', {
-         templateUrl: 'views/gameview.html', //add the correct path
+         templateUrl: 'views/gameview.html',
          controller: 'GameCtrl'
          //levelId goes into $routeParams
        }).
