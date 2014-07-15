@@ -14,17 +14,18 @@
         <div class="numberBox hideAnim" 
              droppable drop="handleDrop" draggable
              id={{$index}}
-             ng-hide = "number === 1"
-             ng-class = "{'active':prev==$index}">{{number+' '}} </div>
+             ng-class = "{'active': (prev==$index && !winFlag)}">
+          {{number+' '}} 
+        </div>
       </div>
     </div>
-    <br><br>
+    <br><br><br>
     <!--History module-->
     <div>
       <div class="animate" ng-repeat="(age,state) in hist">
         <div id="buttonGroup" class="animate"
              ng-repeat="nr in state track by $index">
-          <div class="numberBox hideAnim" ng-hide = "nr === 1"
+          <div class="numberBox hideAnim" 
                ng-class="{'active':$index==histPrev[age]}"
                style="display:block!important">
             {{nr+' '}}
@@ -45,17 +46,11 @@
       <a class="btn btn-default" role="button" href='/#/levels'> Back </a>
     </div>
 
-
-
-<!--    <button class="btn-primary" id="centered" ng-click="reset()"> Reset </button> -->
-
     <h3 ng-show = "loseFlag"> Sorry, it seems you have reached a dead end. Try again? </h3>
     <h2 ng-show = "winFlag"> Congratulations! You won!</h2>
     <h2 ng-show = "winFlag"> 
       <a href="{{'/#/levels/' + (currentLevel+2)}}"> Next level </a>
     </h2>
-
-    <!--<h2><a href='/#/levels'> Back </a></h2> -->
   </body>
 </html>
 

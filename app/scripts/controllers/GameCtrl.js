@@ -11,7 +11,7 @@ angular.module('previewGruntApp')
       [2,6,3],
       [2,3,4,6],
       [6,10,15],
-      [2,12,10,30,2],
+      [12,10,30],
       [3,6,4,12,14,21],
       [6,6,6,6,9],
       [4,4,6,6,9],
@@ -154,9 +154,21 @@ angular.module('previewGruntApp')
 
 
 .directive('draggable', function() {
-  return function(scope, element) {
+  return {
+  scope:true,
+  link: function(scope, element) {
     // this gives us the native JS object
     var el = element[0];
+
+
+    //This should make the function not run if the element is not the 
+    //active one (element.id!==scope.prev), but allow it to run if this is 
+    //the first element (in which case scope.prev===-1)
+    
+    console.log(scope.prev);
+    //var sc = angular.element(el).scope();
+    if(scope.prev !== -1) return;
+    if(element.id!==scope.prev && scope.prev!==-1) return;
     
     el.draggable = true;
     
@@ -181,7 +193,8 @@ angular.module('previewGruntApp')
       },
       false
     );
-  };
+  }
+ }
 })
 
 .directive('droppable', function() {
