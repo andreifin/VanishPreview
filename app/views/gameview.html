@@ -52,9 +52,16 @@
       <a href="{{'/#/levels/' + (currentLevel+2)}}"> Next level </a>
     </h2>
     <script>
-      document.body.addEventListener('touchmove', function(event) { 
+      document.body.addEventListener('touchstart', function(event) {
+        if(event.target.id == "buttonGroup") event.preventDefault();
+      },false);
+      document.body.addEventListener('touchmove', function(event) {
+        if(event.target.id == "buttonGroup") event.preventDefault();
+      },false);
+      /*var group = document.getElementByID("buttonGroup");
+      group.addEventListener('touchmove', function(event) { 
         event.preventDefault();
-      }, false);
+      }, false);*/
     </script> 
   </body>
 </html>

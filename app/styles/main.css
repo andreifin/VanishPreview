@@ -1,3 +1,10 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+
 h1, h2, h3, p {
   text-align: center;
 }
@@ -31,8 +38,9 @@ p {
   margin-right:auto;
 }
 #centered {
-  width: 100%;
-  margin-left: 43%;
+  width: 100%; /*this centering is behaving really strange*/
+  margin-left: 23%;
+  margin-right: 0;
 }
 
 .numberBox {
