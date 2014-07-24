@@ -30,7 +30,7 @@ angular.module('previewGruntApp')
       [44,63,180,385]
     ];
 
-  var comDiv, endCheck, hasDiv;
+  var comDiv, endCheck, hasDiv, findPos, checkCollisions;
   $scope.currentLevel = $routeParams.levelId - 1; //array offset
   $scope.startingNums = $scope.levels[$scope.currentLevel]; //stored for reset
   $scope.numbers = $scope.startingNums.concat([]); //current working array
@@ -86,7 +86,10 @@ angular.module('previewGruntApp')
 
   $scope.handleDrop = function(item, bin){
     var div;
-    if(item===bin) {return;}
+    if(item===bin) {
+      console.log(item,bin);
+      return;
+    }
     if (item === $scope.prev || $scope.prev === -1) {
       div = comDiv($scope.numbers[item], $scope.numbers[bin]);
       if (div === 1) {
@@ -142,6 +145,34 @@ angular.module('previewGruntApp')
     }
   }
 
+  //function to find absolute position
+
+  $scope.findPos = function(obj){
+    var curleft, curtop;
+    curleft = curtop = 0;
+    if (obj.offsetParent) {
+      do {
+        curleft += obj.offsetLeft;
+        curtop += obj.offsetTop;
+      } while (obj = obj.offsetParent);
+    }
+    return [curleft,curtop];
+  }
+
+  $scope.checkCollisions = function(posx,posy){
+    var i;
+    for(i=0;i<$scope.numbers.length;i++) {
+      var elem = document.getElementById(i)
+      var curpos = $scope.findPos(elem);
+      var x = curpos[0];
+      var y = curpos[1]; 
+
+      console.log(x,y,posx,posy);
+      if(x < posx && x+40 > posx && y < posy && y+40 > posy) return i; //TODO: replace 40 with actual size (in case it will be changed)
+    }
+    return -1;
+  }
+
   return $scope.reset = function(){
     $scope.prev = -1;
     $scope.winFlag = false;
@@ -159,25 +190,39 @@ angular.module('previewGruntApp')
   link: function(scope, element) {
     // this gives us the native JS object
     var el = element[0];
-
-
-    //This should make the function not run if the element is not the 
-    //active one (element.id!==scope.prev), but allow it to run if this is 
-    //the first element (in which case scope.prev===-1)
-    
-    console.log(scope.prev);
-    //var sc = angular.element(el).scope();
-    if(scope.prev !== -1) return;
-    if(element.id!==scope.prev && scope.prev!==-1) return;
     
     el.draggable = true;
     
     el.addEventListener(
       'dragstart',
       function(e) {
+
+        //this should prevent dragging if the element is not
+        //the one where the series should continue
+        if(scope.prev!=-1 && this.id != scope.prev) return;
+
         e.dataTransfer.effectAllowed = 'move'; 
         this.style.opacity = '0.4';
         e.dataTransfer.setData('Text', this.id);
+        this.classList.add('drag');
+        return false;
+      },
+      false
+    );
+
+    el.addEventListener(
+      'touchstart',
+      function(e) {
+        console.log(e);
+
+        //this should prevent dragging if the element is not
+        //the one where the series should continue
+        if(scope.prev!=-1 && this.id != scope.prev) return;
+
+        //if (e.preventDefault) e.preventDefault();
+        /*e.dataTransfer.effectAllowed = 'move'; */
+        this.style.opacity = '0.4';
+        //e.dataTransfer.setData('Text', this.id);
         this.classList.add('drag');
         return false;
       },
@@ -189,6 +234,26 @@ angular.module('previewGruntApp')
       function(e) {
         this.style.opacity = '1.0';
         this.classList.remove('drag');
+        return false;
+      },
+      false
+    );
+
+    el.addEventListener(
+      'touchend',
+      function(e) {
+        console.log(e);
+        this.style.opacity = '1.0';
+        this.classList.remove('drag');
+   
+        console.log(scope.findPos(this));
+
+
+        var coll = scope.checkCollisions(e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+
+        console.log(coll);
+        scope.$apply(scope.handleDrop(parseInt(this.id),coll));
+
         return false;
       },
       false
