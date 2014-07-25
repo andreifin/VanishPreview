@@ -38,9 +38,7 @@ p {
   margin-right:auto;
 }
 #centered {
-  width: 100%; /*this centering is behaving really strange*/
-  margin-left: 23%;
-  margin-right: 0;
+  text-align:center;
 }
 
 .numberBox {

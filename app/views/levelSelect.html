@@ -9,8 +9,8 @@
 <h1> Level Select </h1>
 <br>
 <div id="buttonGroup" ng-repeat="level in levels track by $index">
-  <form  action="{{'/#/levels/' + ($index+1)}}">
-    <input id="lvlButton" type="submit" value={{$index+1}}>
+  <form  action="{{'#/levels/' + ($index+1)}}">
+    <input class = "btn-default" id="lvlButton" type="submit" value={{$index+1}}>
   </form>
 </div>
   <!--a layout of 3 squares per line might be nice, but start with

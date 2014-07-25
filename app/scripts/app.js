@@ -19,8 +19,7 @@ angular
   .config(function ($routeProvider) {
     $routeProvider.
        when('/', {
-         templateUrl: 'views/main.html',
-         controller: 'MainCtrl'
+         templateUrl: 'views/main.html'
        }).
        when('/links', {
          templateUrl: 'views/links.html',
